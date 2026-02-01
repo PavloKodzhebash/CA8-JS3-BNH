@@ -1,1 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Pavlo Hdgsidib">
+    <title>Bear Ninja Hunter Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        #results {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #aaa;
+            background-color: #fff;
+            display: inline-block;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bear Ninja Hunter</h1>
+    <div id="results"></div>
 
+    <script>
+        // Инициализация переменных
+        const choices = ['bear', 'ninja', 'hunter']; // варианты игры
+        let playerName = prompt("Welcome to Bear Ninja Hunter! Please enter your name:");
+        
+        if (!playerName || playerName.trim() === "") {
+            alert("Name cannot be empty. Refresh the page and try again.");
+        } else {
+            playerName = playerName.trim();
+            alert("Hello " + playerName + "! Get ready to play Bear Ninja Hunter!");
+            
+            let playAgain = "yes"; // запуск цикла игры
+            
+            while (playAgain.toLowerCase() === "yes") {
+                // Ввод игрока
+                let playerChoice = prompt("Choose your fighter: Bear, Ninja, or Hunter:");
+                
+                if (playerChoice === null) { 
+                    alert("Game cancelled.");
+                    break;
+                }
+                
+                playerChoice = playerChoice.toLowerCase().trim(); // Forced Case
+                
+                // Проверка корректности ввода
+                if (!choices.includes(playerChoice)) {
+                    alert("Invalid input. Please type Bear, Ninja, or Hunter. Refresh page to try again.");
+                    break;
+                }
+                
+                // Случайный выбор компьютера
+                const randomIndex = Math.floor(Math.random() * choices.length);
+                const computerChoice = choices[randomIndex];
+                
+                let result = "";
+
+                // Определение победителя
+                if (playerChoice === computerChoice) {
+                    result = "It's a tie!";
+                } else if (
+                    (playerChoice === "bear" && computerChoice === "hunter") ||
+                    (playerChoice === "ninja" && computerChoice === "bear") ||
+                    (playerChoice === "hunter" && computerChoice === "ninja")
+                ) {
+                    result = playerName + " wins!";
+                } else {
+                    result = "Computer wins!";
+                }
+
+                // Вывод результата в alert и console
+                const message = "Player: " + playerChoice + " | Computer: " + computerChoice + " | " + result;
+                alert(message);
+                console.log(message);
+
+                // Вывод результата в HTML
+                const resultsDiv = document.getElementById("results");
+                resultsDiv.innerHTML += message + "<br>";
+
+                // Спрашиваем, хочет ли игрок сыграть снова
+                playAgain = prompt("Do you want to play again? (yes/no)");
+                
+                if (!playAgain || playAgain.toLowerCase().trim() !== "yes") {
+                    alert("Thanks for playing, " + playerName + "!");
+                    break;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
